@@ -1,0 +1,66 @@
+[
+    {
+        "model": "jobs.category",
+        "pk": 1,
+        "fields": {
+            "name": "Công nghệ thông tin",
+            "icon": "fas fa-laptop-code"
+        }
+    },
+    {
+        "model": "jobs.category",
+        "pk": 2,
+        "fields": {
+            "name": "Marketing",
+            "icon": "fas fa-bullhorn"
+        }
+    },
+    {
+        "model": "jobs.category",
+        "pk": 3,
+        "fields": {
+            "name": "Tài chính - Kế toán",
+            "icon": "fas fa-calculator"
+        }
+    },
+    {
+        "model": "jobs.category",
+        "pk": 4,
+        "fields": {
+            "name": "Kinh doanh - Bán hàng",
+            "icon": "fas fa-chart-line"
+        }
+    },
+    {
+        "model": "jobs.category",
+        "pk": 5,
+        "fields": {
+            "name": "Nhân sự",
+            "icon": "fas fa-users"
+        }
+    },
+    {
+        "model": "jobs.category",
+        "pk": 6,
+        "fields": {
+            "name": "Thiết kế",
+            "icon": "fas fa-paint-brush"
+        }
+    },
+    {
+        "model": "jobs.category",
+        "pk": 7,
+        "fields": {
+            "name": "Giáo dục - Đào tạo",
+            "icon": "fas fa-graduation-cap"
+        }
+    },
+    {
+        "model": "jobs.category",
+        "pk": 8,
+        "fields": {
+            "name": "Y tế - Dược",
+            "icon": "fas fa-hospital"
+        }
+    }
+]
