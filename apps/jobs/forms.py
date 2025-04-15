@@ -4,17 +4,23 @@ from .models import Job, Application, Category
 class JobForm(forms.ModelForm):
     category = forms.ModelChoiceField(
         queryset=Category.objects.all(),
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={
+            'class': 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+        })
     )
     
     job_type = forms.ChoiceField(
         choices=Job.JOB_TYPE_CHOICES,
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={
+            'class': 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+        })
     )
 
     experience_level = forms.ChoiceField(
         choices=Job.EXPERIENCE_LEVEL_CHOICES,
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={
+            'class': 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+        })
     )
 
     class Meta:
@@ -24,12 +30,32 @@ class JobForm(forms.ModelForm):
             'location', 'salary', 'job_type', 'experience_level', 'deadline'
         ]
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'deadline': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'rows': 4, 'class': 'form-control'}),
-            'requirements': forms.Textarea(attrs={'rows': 4, 'class': 'form-control'}),
-            'location': forms.TextInput(attrs={'class': 'form-control'}),
-            'salary': forms.TextInput(attrs={'class': 'form-control'}),
+            'title': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                'placeholder': 'Enter job title'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                'rows': 4,
+                'placeholder': 'Describe the job role and responsibilities'
+            }),
+            'requirements': forms.Textarea(attrs={
+                'class': 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                'rows': 4,
+                'placeholder': 'List the job requirements'
+            }),
+            'location': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                'placeholder': 'Job location'
+            }),
+            'salary': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                'placeholder': 'e.g. $50,000 - $70,000'
+            }),
+            'deadline': forms.DateInput(attrs={
+                'class': 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                'type': 'date'
+            }),
         }
 
 
@@ -50,18 +76,34 @@ class JobApplicationForm(forms.ModelForm):
 
 class JobSearchForm(forms.Form):
     search = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': 'Job title or keyword'}
+        attrs={
+            'placeholder': 'Job title or keyword',
+            'class': 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+        }
     ))
     location = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': 'Location'}
+        attrs={
+            'placeholder': 'Location',
+            'class': 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+        }
     ))
-    category = forms.ChoiceField(required=False)
+    category = forms.ChoiceField(
+        required=False,
+        widget=forms.Select(attrs={
+            'class': 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+        })
+    )
     job_type = forms.ChoiceField(
         required=False,
-        choices=[('', 'All Types')] + Job.JOB_TYPE_CHOICES
+        choices=[('', 'All Types')] + Job.JOB_TYPE_CHOICES,
+        widget=forms.Select(attrs={
+            'class': 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+        })
     )
 
 class JobPostForm(forms.ModelForm):
     class Meta:
         model = Job
         fields = ['title', 'description', 'location', 'salary', 'job_type']
+
+
