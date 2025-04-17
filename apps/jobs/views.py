@@ -22,34 +22,58 @@ def home(request):
     return render(request, 'jobs/home.html', context)
 
 def job_list(request):
-    form = JobSearchForm(request.GET)
     jobs = Job.objects.filter(is_active=True)
+    
+    # Xử lý các filter
+    search = request.GET.get('search')
+    location = request.GET.get('location')
+    job_type = request.GET.get('job_type')
+    experience = request.GET.get('experience')
+    salary = request.GET.get('salary')
 
-    if form.is_valid():
-        search = form.cleaned_data.get('search')
-        location = form.cleaned_data.get('location')
-        category = form.cleaned_data.get('category')
-        job_type = form.cleaned_data.get('job_type')
-
-        if search:
+    if search:
+        jobs = jobs.filter(
+            Q(title__icontains=search) |
+            Q(description__icontains=search)
+        )
+    
+    if location:
+        jobs = jobs.filter(location__icontains=location)
+    
+    if job_type:
+        jobs = jobs.filter(job_type=job_type)
+        
+    if experience:
+        jobs = jobs.filter(experience_level=experience)
+        
+    if salary:
+        # Xử lý filter theo salary range
+        salary_range = salary.split('-')
+        if len(salary_range) == 2:
+            min_salary, max_salary = salary_range
             jobs = jobs.filter(
-                Q(title__icontains=search) |
-                Q(description__icontains=search)
+                salary__gte=float(min_salary),
+                salary__lte=float(max_salary)
             )
-        if location:
-            jobs = jobs.filter(location__icontains=location)
-        if category:
-            jobs = jobs.filter(category=category)
-        if job_type:
-            jobs = jobs.filter(job_type=job_type)
+        elif salary.endswith('+'):
+            min_salary = float(salary.rstrip('+'))
+            jobs = jobs.filter(salary__gte=min_salary)
 
-    paginator = Paginator(jobs, 9)  # 9 jobs per page
+    # Pagination
+    paginator = Paginator(jobs, 9)
     page = request.GET.get('page')
     jobs = paginator.get_page(page)
 
     context = {
         'jobs': jobs,
-        'form': form,
+        'job_types': Job.JOB_TYPE_CHOICES,
+        'current_filters': {
+            'search': search,
+            'location': location,
+            'job_type': job_type,
+            'experience': experience,
+            'salary': salary,
+        }
     }
     return render(request, 'jobs/job_list.html', context)
 
@@ -194,3 +218,6 @@ def manage_application(request, application_id):
             messages.error(request, "Invalid action")
     
     return redirect('dashboard:employer')
+
+
+

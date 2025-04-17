@@ -118,13 +118,40 @@
     <section class="bg-gray-50 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Results Count -->
-            <div class="mb-6 flex justify-between items-center">
-                <h2 class="text-xl font-semibold text-gray-900">{{ jobs.count }} Jobs Found</h2>
-                <select class="border border-gray-300 rounded-md px-3 py-1.5">
-                    <option>Most Recent</option>
-                    <option>Most Relevant</option>
-                </select>
+            {% if current_category %}
+            <div class="mb-4">
+                <h2 class="text-xl font-semibold text-gray-900">
+                    Jobs in {{ current_category.name }}
+                </h2>
             </div>
+            {% endif %}
+
+            {% if not jobs %}
+            <div class="text-center py-8">
+                <p class="text-gray-600">
+                    {% if current_category %}
+                        No jobs available in {{ current_category.name }} category at the moment.
+                    {% else %}
+                        No jobs found matching your criteria.
+                    {% endif %}
+                </p>
+            </div>
+            {% endif %}
+
+            <!-- Breadcrumb Navigation -->
+            <nav class="mb-4">
+                <ol class="flex items-center space-x-2 text-gray-600">
+                    <li><a href="{% url 'jobs:home' %}" class="hover:text-blue-600">Home</a></li>
+                    <li><span class="mx-2">›</span></li>
+                    {% if current_category %}
+                        <li><a href="{% url 'jobs:job_list' %}" class="hover:text-blue-600">All Jobs</a></li>
+                        <li><span class="mx-2">›</span></li>
+                        <li class="text-blue-600">{{ current_category.name }}</li>
+                    {% else %}
+                        <li class="text-blue-600">All Jobs</li>
+                    {% endif %}
+                </ol>
+            </nav>
 
             <!-- Job Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
