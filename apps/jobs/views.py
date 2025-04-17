@@ -205,7 +205,7 @@ def manage_application(request, application_id):
     # Kiểm tra quyền truy cập
     if not request.user.is_employer or request.user.employer != application.job.employer:
         messages.error(request, "You don't have permission to manage this application.")
-        return redirect('dashboard:employer')
+        return redirect('dashboard:employer_dashboard')  # Sửa từ 'employer' thành 'employer_dashboard'
     
     if request.method == 'POST':
         action = request.POST.get('action')
@@ -217,7 +217,8 @@ def manage_application(request, application_id):
         else:
             messages.error(request, "Invalid action")
     
-    return redirect('dashboard:employer')
+    return redirect('dashboard:employer_dashboard')  # Sửa từ 'employer' thành 'employer_dashboard'
+
 
 
 

@@ -96,11 +96,24 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                    {% if application.status == 'pending' %}bg-yellow-100 text-yellow-800
-                                    {% elif application.status == 'accepted' %}bg-green-100 text-green-800
-                                    {% elif application.status == 'rejected' %}bg-red-100 text-red-800
-                                    {% elif application.status == 'reviewing' %}bg-blue-100 text-blue-800{% endif %}">
-                                    {{ application.get_status_display }}
+                                    {% if application.status == 'pending' %}
+                                        bg-yellow-100 text-yellow-800
+                                    {% elif application.status == 'accepted' %}
+                                        bg-green-100 text-green-800
+                                    {% elif application.status == 'rejected' %}
+                                        bg-red-100 text-red-800
+                                    {% elif application.status == 'reviewing' %}
+                                        bg-blue-100 text-blue-800
+                                    {% endif %}">
+                                    {% if application.status == 'pending' %}
+                                    Pending Review
+                                    {% elif application.status == 'accepted' %}
+                                    Application Accepted
+                                    {% elif application.status == 'rejected' %}
+                                    Application Rejected
+                                    {% elif application.status == 'reviewing' %}
+                                    Under Review
+                                    {% endif %}
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
@@ -109,22 +122,37 @@
                                     {% csrf_token %}
                                     {% if application.status != 'accepted' %}
                                     <button type="submit" name="action" value="accept"
-                                        class="text-green-600 hover:text-green-900">
+                                        class="text-green-600 hover:text-green-900 relative group"
+                                        title="Accept this application">
                                         <i class="fas fa-check"></i>
+                                        <span class="hidden group-hover:block absolute bottom-full left-1/2 transform -translate-x-1/2 
+                                                       bg-black text-white text-xs rounded py-1 px-2 mb-2">
+                                            Accept Application
+                                        </span>
                                     </button>
                                     {% endif %}
 
                                     {% if application.status != 'rejected' %}
                                     <button type="submit" name="action" value="reject"
-                                        class="text-red-600 hover:text-red-900">
+                                        class="text-red-600 hover:text-red-900 relative group"
+                                        title="Reject this application">
                                         <i class="fas fa-times"></i>
+                                        <span class="hidden group-hover:block absolute bottom-full left-1/2 transform -translate-x-1/2 
+                                                       bg-black text-white text-xs rounded py-1 px-2 mb-2">
+                                            Reject Application
+                                        </span>
                                     </button>
                                     {% endif %}
 
                                     {% if application.status != 'reviewing' %}
                                     <button type="submit" name="action" value="reviewing"
-                                        class="text-blue-600 hover:text-blue-900">
+                                        class="text-blue-600 hover:text-blue-900 relative group"
+                                        title="Mark as reviewing">
                                         <i class="fas fa-eye"></i>
+                                        <span class="hidden group-hover:block absolute bottom-full left-1/2 transform -translate-x-1/2 
+                                                       bg-black text-white text-xs rounded py-1 px-2 mb-2">
+                                            Mark as Reviewing
+                                        </span>
                                     </button>
                                     {% endif %}
                                 </form>
