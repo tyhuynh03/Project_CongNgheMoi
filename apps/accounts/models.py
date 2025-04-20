@@ -27,10 +27,19 @@ class Employer(models.Model):
     def job_count(self):
         return self.jobs.filter(is_active=True).count()
 
+class Skill(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    
+    def __str__(self):
+        return self.name
+
 class JobSeeker(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     resume = models.FileField(upload_to='resumes/', blank=True)
-    skills = models.TextField(blank=True)
+    bio = models.TextField(blank=True)
+    phone = models.CharField(max_length=20, blank=True)
+    location = models.CharField(max_length=100, blank=True)
+    skills = models.ManyToManyField(Skill, blank=True)
     experience = models.TextField(blank=True)
     education = models.TextField(blank=True)
     
